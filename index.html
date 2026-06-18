@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    
+    <title>WORLDCUP2026 · MUJOS OCTOPUS - AI Oracle</title>
+    <meta name="description" content="MUJOS Octopus 🐙 - L'Oracle IA ultime pour prédire les scores de la Coupe du Monde 2026, suivre les matchs en direct et analyser les 48 nations." />
+    <meta name="keywords" content="MUJOS Octopus, MUJOSpoulpe, coupe du monde 2026, scores en direct, pronostics ia football, oracle football, live scores world cup, simulateur match" />
+    <meta name="author" content="Léandre Ngendakuriyo" />
+
+    <meta property="og:title" content="WORLDCUP2026 · MUJOS OCTOPUS" />
+    <meta property="og:description" content="Scores en direct et prédictions IA avec l'Oracle légendaire." />
+    <meta property="og:type" content="website" />
+
+    <style>
+        :root {
+            --usa: #0066CC; --canada: #E53935; --mexico: #00A651;
+            --gold: #D4AF37; --dark: #04080F; --light: #F8FAFC;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--dark);color:var(--light);font-family:sans-serif;text-align:center}
+        header{padding:2rem 1rem;border-bottom:1px solid var(--usa)}
+        h1{font-size:2.1rem;font-weight:900;letter-spacing:1px;margin-top:1rem;background:linear-gradient(90deg, var(--mexico), var(--usa), var(--canada));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        p.sub{font-size:.75rem;color:#94A3B8;letter-spacing:.2em;margin-top:.4rem}
+        .badges{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+        .badge{font-size:.65rem;padding:.3rem .8rem;border-radius:999px;border:1px solid var(--usa);color:var(--usa)}
+        .lang-selector{display:flex;justify-content:center;gap:.4rem;margin-top:1.2rem;flex-wrap:wrap}
+        .lang-btn{padding:.3rem .6rem;font-size:.65rem;border-radius:6px;border:1px solid var(--usa);background:#111827;color:#94A3B8;cursor:pointer;display:flex;align-items:center;gap:.3rem;transition:all 0.2s}
+        .lang-btn.active,.lang-btn:hover{border-color:var(--mexico);color:#fff;background:var(--mexico)}
+        nav{display:flex;justify-content:center;gap:.5rem;padding:1rem;flex-wrap:wrap}
+        button{padding:.5rem 1rem;border-radius:8px;border:1px solid var(--usa);background:transparent;color:#94A3B8;cursor:pointer;font-size:.7rem;position:relative}
+        button.active,button:hover{background:var(--usa);color:#fff;border-color:var(--usa)}
+        .live-dot{width:6px;height:6px;background:var(--canada);border-radius:50%;display:inline-block;margin-left:4px;vertical-align:middle;box-shadow:0 0 8px var(--canada);animation:blink 1.2s infinite}
+        @keyframes blink{0%{opacity:0.2}50%{opacity:1}100%{opacity:0.2}}
+        .section{display:none;max-width:900px;margin:0 auto;padding:1rem}.section.active{display:block}
+        .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+        .card{background:#0A1224;border:1px solid var(--usa);border-radius:12px;padding:1rem;text-align:left}
+        .glabel{font-size:1.3rem;font-weight:900;color:var(--mexico);margin-bottom:.6rem}
+        .trow{display:flex;justify-content:space-between;padding:.35rem 0;border-bottom:1px solid #ffffff08;font-size:.85rem;cursor:pointer}
+        .trow:hover{color:var(--usa)}.trow:last-child{border:none}
+        .rk{font-size:.6rem;color:#94A3B8;background:#ffffff08;padding:.1rem .4rem;border-radius:4px}
+        .box{background:#0A1224;border:1px solid var(--usa);border-radius:12px;padding:1.2rem;margin-top:.5rem;text-align:left}
+        select{width:100%;background:#111827;color:var(--light);border:1px solid var(--usa);border-radius:8px;padding:.6rem;font-size:.82rem;margin-bottom:.8rem}
+        .pbtn{width:100%;padding:.9rem;background:var(--usa);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer}
+        .result{display:none;margin-top:1rem;background:#111827;border:1px solid var(--usa);border-radius:12px;padding:1.2rem}
+        .score{font-size:2rem;font-weight:900;color:var(--gold);text-align:center;display:block;margin:.5rem 0}
+        .prow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin:.8rem 0}
+        .pc{text-align:center;padding:.7rem .3rem;border-radius:10px;border:1px solid var(--usa)}
+        .pc span{display:block;font-size:1.6rem;font-weight:900}
+        .pc small{font-size:.55rem;color:#94A3B8}
+        .w span{color:var(--mexico)}.d span{color:var(--gold)}.l span{color:var(--usa)}
+        .bars{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem}
+        .bl{display:flex;justify-content:space-between;font-size:.7rem;color:#94A3B8;margin-bottom:.15rem}
+        .btr{height:4px;background:#ffffff08;border-radius:4px;overflow:hidden;margin-bottom:.35rem}
+        .bf{height:100%;background:linear-gradient(90deg,var(--mexico),var(--usa));border-radius:4px}
+        .dsearch{display:flex;gap:.5rem;margin-bottom:1rem}
+        .dsearch input{flex:1;background:#111827;border:1px solid var(--usa);border-radius:8px;padding:.6rem;color:var(--light);font-size:.85rem;outline:none}
+        .dsearch button{padding:.6rem 1rem;background:var(--usa);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer}
+        .dcard{display:none;background:#0A1224;border:1px solid var(--usa);border-radius:12px;padding:1.2rem;text-align:left}
+        .dname{font-size:1.8rem;font-weight:900;color:var(--usa)}
+        .dmeta{font-size:.65rem;color:#94A3B8;margin-bottom:1rem}
+        .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+        .db{background:#111827;border-radius:8px;padding:.8rem;border:1px solid var(--usa)}
+        .db p{font-size:.78rem;color:#94A3B8;line-height:1.5}
+        .mcard{background:#0A1224;border:1px solid var(--usa);border-radius:10px;padding:.9rem;margin-bottom:.6rem;text-align:left}
+        .mdate{font-size:.6rem;color:#94A3B8;margin-bottom:.4rem}
+        .mteams{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.95rem}
+        .mgroup{font-size:.6rem;color:var(--gold);background:rgba(212,175,55,0.1);padding:.2rem .5rem;border-radius:4px}
+        .mvenue{font-size:.62rem;color:#64748B;margin-top:.3rem}
+        .mresult{font-size:1.2rem;font-weight:900;color:var(--gold)}
+        .mfilter{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;justify-content:center}
+        .mfilter button{font-size:.65rem;padding:.3rem .7rem}
+        footer{padding:1.5rem;font-size:.6rem;color:#94A3B8;border-top:1px solid var(--usa);margin-top:2rem}
+        @media(max-width:480px){.bars,.dgrid{grid-template-columns:1fr}}
+        /* Mascotte CSS */
+        .octopus{width:100%;max-width:300px;margin:1rem auto}
+        .head{width:190px;height:190px;border-radius:50%;margin:auto;overflow:hidden;position:relative;border:5px solid var(--gold);box-shadow:0 0 25px rgba(212,175,55,.4)}
+        .stripe{position:absolute;top:0;bottom:0;width:33.33%}
+        .stripe.blue{left:0;background:var(--usa)}
+        .stripe.white{left:33.33%;background:#fff}
+        .stripe.red{left:66.66%;background:var(--canada)}
+        .eye{width:38px;height:38px;background:#fff;border-radius:50%;position:absolute;top:76px;animation:oblink 4s infinite}
+        .eye::after{content:"";width:17px;height:17px;background:#111;border-radius:50%;position:absolute;top:10.5px;left:10.5px}
+        .eye.left{left:45px}.eye.right{right:45px}
+        .logo{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);text-align:center;color:var(--gold);font-weight:bold;font-size:12px}
+        .tentacles{display:flex;flex-wrap:nowrap;justify-content:center;margin-top:-16px}
+        .t{width:30px;height:100px;border-radius:18px 18px 42px 42px;margin:0 2px;animation:owiggle 2.4s ease-in-out infinite;transform-origin:top center}
+        .t:nth-child(even){animation-direction:alternate-reverse;animation-delay:.3s}
+        .t.blue{background:var(--usa)}.t.red{background:var(--canada)}.t.green{background:var(--mexico)}.t.gold{background:var(--gold)}
+        @keyframes owiggle{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+        @keyframes oblink{0%,96%,100%{transform:scaleY(1)}98%{transform:scaleY(.1)}}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="octopus">
+          <div class="head">
+            <div class="stripe blue"></div><div class="stripe white"></div><div class="stripe red"></div>
+            <div class="eye left"></div><div class="eye right"></div>
+            <div class="logo">🐙<br>MUJOS</div>
+          </div>
+          <div class="tentacles">
+            <span class="t blue"></span><span class="t green"></span><span class="t red"></span><span class="t gold"></span>
+            <span class="t blue"></span><span class="t green"></span><span class="t red"></span><span class="t gold"></span>
+          </div>
+        </div>
+
+        <h1 id="main-title">WORLDCUP2026 · MUJOS OCTOPUS</h1>
+        <p class="sub" id="main-sub">AI FOOTBALL ORACLE · 48 NATIONS · LIVE SCORES</p>
+        
+        <div class="badges">
+            <span class="badge">USA</span>
+            <span class="badge">CANADA</span>
+            <span class="badge">MEXICO</span>
+            <span class="badge" id="badge-dates">11 JUN - 19 JUL 2026</span>
+        </div>
+
+        <div class="lang-selector">
+            <button class="lang-btn active" onclick="changerLangue('fr', this)">🇫🇷 FR</button>
+            <button class="lang-btn" onclick="changerLangue('en', this)">🇬🇧 EN</button>
+            <button class="lang-btn" onclick="changerLangue('pt', this)">🇵🇹 PT</button>
+        </div>
+    </header>
+
+    <nav>
+        <button class="active" id="btn-groups" onclick="tab('groups',this)">GROUPES</button>
+        <button id="btn-schedule" onclick="tab('schedule',this)">CALENDRIER</button>
+        <button id="btn-predict" onclick="tab('predict',this)">PRÉDICTIONS</button>
+        <button id="btn-dossier" onclick="tab('dossier',this)">DOSSIERS</button>
+        <button id="btn-news" onclick="tab('news',this)">NEWS<span class="live-dot"></span></button>
+    </nav>
+
+    <div id="groups" class="section active"><div class="grid" id="gg"></div></div>
+    <div id="schedule" class="section"><div class="mfilter" id="mfilter"></div><div id="matchlist"></div></div>
+    <div id="predict" class="section">
+        <div class="box">
+            <select id="ta"></select><select id="tb"></select>
+            <button class="pbtn" id="btn-oracle-predict" onclick="predict()">ORACLE - PRÉDIRE LE MATCH</button>
+            <div class="result" id="rc">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-weight:700">
+                    <span id="rta"></span><span class="score" id="rs"></span><span id="rtb"></span>
+                </div>
+                <div class="prow">
+                    <div class="pc w"><span id="pw"></span><small id="lbl-winA">VICTOIRE A</small></div>
+                    <div class="pc d"><span id="pd"></span><small id="lbl-draw">NUL</small></div>
+                    <div class="pc l"><span id="pl"></span><small id="lbl-winB">VICTOIRE B</small></div>
+                </div>
+                <div class="bars">
+                    <div><p style="font-size:.6rem;color:#94A3B8;margin-bottom:.4rem" id="bat"></p><div id="bab"></div></div>
+                    <div><p style="font-size:.6rem;color:#94A3B8;margin-bottom:.4rem" id="bbt"></p><div id="bbb"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="dossier" class="section">
+        <div class="dsearch"><input id="di" placeholder="France, Espagne, Allemagne..."/><button onclick="dos()" id="btn-open-dossier">OUVRIR</button></div>
+        <div class="dcard" id="dc">
+            <div class="dname" id="dn"></div><div class="dmeta" id="dm"></div>
+            <div class="dgrid">
+                <div class="db"><div class="dbt" id="lbl-attack">ATTAQUE</div><p id="da"></p></div>
+                <div class="db"><div class="dbt" id="lbl-defense">DÉFENSE</div><p id="dd"></p></div>
+                <div class="db"><div class="dbt" id="lbl-form">FORME</div><p id="df"></p></div>
+                <div class="db"><div class="dbt" id="lbl-mental">MENTAL</div><p id="dme"></p></div>
+                <div class="db"><div class="dbt" id="lbl-coach">SÉLECTIONNEUR</div><p id="dc2"></p></div>
+                <div class="db"><div class="dbt" id="lbl-keyplayer">JOUEUR CLÉ</div><p id="dkp"></p></div>
+                <div class="db"><div class="dbt" id="lbl-stars">ÉTOILES</div><p id="dsp"></p></div>
+                <div class="db"><div class="dbt" id="lbl-history">HISTOIRE</div><p id="dh"></p></div>
+            </div>
+        </div>
+    </div>
+    <div id="news" class="section"><div id="news-list" style="padding:0.5rem 0;"></div></div>
+
+    <footer id="main-footer">MUJOS Octopus · AI Football Oracle · Not affiliated with FIFA</footer>
+
+    <script src="js/teams.js"></script>
+    <script src="js/matches.js"></script>
+    <script src="js/dossiers.js"></script>
+    <script src="js/app.js"></script>
+</body>
+      </html>
+  
