@@ -147,4 +147,4 @@ window.onload = function() {
     changerLangue(langueSauvegardee, btnLangue);
     initGroups();
 };
-        
+     
