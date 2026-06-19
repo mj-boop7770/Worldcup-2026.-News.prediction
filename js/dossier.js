@@ -1,29 +1,47 @@
 // js/dossier.js
 
-// 1. On importe la mémoire (le JSON)
-import tournamentData from '../2026.json' assert { type: 'json' };
+/**
+ * Récupère le dossier complet d'un match spécifique par nom d'équipe
+ * @param {Object} data - Le JSON complet (dossier.json)
+ * @param {string} nomEquipe - ex: "brazil"
+ * @returns {Object|null}
+ */
+export function getMatchDossier(data, nomEquipe) {
+    if (!data || !data.matches_dossier) return null;
 
-// 2. On importe le cerveau (les calculs de stats.js)
-import { StatsEngine } from './stats.js';
+    return data.matches_dossier.find(m => 
+        m.teams[nomEquipe] !== undefined
+    );
+}
 
-// 3. On importe la voix (les messages dans les 3 langues de messages.js)
-import { getOracleMessage } from './messages.js';
+/**
+ * Extrait les données d'une équipe dans une langue spécifique
+ * @param {Object} matchData - L'objet match récupéré
+ * @param {string} teamKey - ex: "brazil"
+ * @param {string} lang - "fr", "en", ou "pt"
+ */
+export function getTeamContent(matchData, teamKey, lang = 'fr') {
+    const team = matchData.teams[teamKey];
+    if (!team) return null;
 
-export const MUJOS = {
-    /**
-     * Cette fonction est le seul point d'entrée dont tu as besoin dans ton app.js
-     * Elle reçoit le nom de l'équipe, la langue souhaitée et le ton.
-     */
-    consulterOracle: (teamName, lang, tone) => {
+    return {
+        general: team.general_performance.world_cup[lang],
+        qualifiers: team.general_performance.qualifiers[lang],
+        strength: team.key_strength[lang],
+        weakness: team.key_weakness[lang],
+        coach: team.coach.name,
+        tactics: team.coach.tactics[lang],
+        star: team.star_player.name,
+        starForm: team.star_player.club_form[lang],
+        prediction: team.prediction[lang]
+    };
+}
+
+/**
+ * Exemple d'utilisation dans ton app :
+ * const dossier = await chargerDossier(); // fetch ton dossier.json
+ * const matchInfo = getMatchDossier(dossier, "brazil");
+ * const infoBrésil = getTeamContent(matchInfo, "brazil", "fr");
+ * console.log(infoBrésil.prediction);
+ */
         
-        // A. Étape de calcul : On demande à stats.js de traiter la mémoire (tournamentData)
-        const points = StatsEngine.calculerPoints(teamName, tournamentData.matches);
-        
-        // B. Étape de forme : On demande à messages.js de traduire et styliser le résultat
-        const messageFinal = getOracleMessage(lang, tone, teamName, points);
-        
-        // C. On renvoie le résultat prêt à être affiché
-        return messageFinal;
-    }
-};
-    
