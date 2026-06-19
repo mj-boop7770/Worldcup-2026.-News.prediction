@@ -1,1 +1,64 @@
-
+{
+  "news_section": {
+    "point_1_matchs_et_pepites": {
+      "title": {
+        "fr": "Faits bruts : Efficacité et révélations",
+        "en": "Raw facts: Efficiency and revelations",
+        "pt": "Factos brutos: Eficácia e revelações"
+      },
+      "content": {
+        "fr": "Canada-Qatar : 6-0. Allemagne-Curaçao : 7-1. Stats : moyenne de 3,13 buts/match (75 buts en 24 matchs), record depuis 1958 [web:12][web:14][web:17][web:21][web:27][web:66]. Révélation : Jonathan David (Belgique) 3 buts, Lionel Messi 3 buts [web:1][web:31]. La Tchéquie a créé la surprise en tenant l'Afrique du Sud 1-1 [web:31].",
+        "en": "Canada-Qatar: 6-0. Germany-Curaçao: 7-1. Stats: average 3.13 goals/match (75 goals in 24 matches), record since 1958 [web:12][web:14][web:17][web:21][web:27][web:66]. Revelation: Jonathan David (Belgium) 3 goals, Lionel Messi 3 goals [web:1][web:31]. Czechia surprised by holding South Africa 1-1 [web:31].",
+        "pt": "Canadá-Qatar: 6-0. Alemanha-Curaçao: 7-1. Estatísticas: média de 3,13 golos/jogo (75 golos em 24 jogos), recorde desde 1958 [web:12][web:14][web:17][web:21][web:27][web:66]. Revelação: Jonathan David (Bélgica) 3 golos, Lionel Messi 3 golos [web:1][web:31]. A Chéquia surpreendeu segurando África do Sul 1-1 [web:31]."
+      }
+    },
+    "point_2_scandales_et_discipline": {
+      "title": {
+        "fr": "Rapport disciplinaire et médical",
+        "en": "Disciplinary and medical report",
+        "pt": "Relatório disciplinar e médico"
+      },
+      "content": {
+        "fr": "3 cartons rouges au match d'ouverture Mexique-Afrique du Sud (record historique pour match d'ouverture) [web:65][web:68][web:71]. Total : seulement 3 cartons rouges après 24 matchs (moins que 2022 avec 4) [web:71]. Taux de blessures musculaires : ischio-jambiers en hausse (Ter Stegen opération prévue, blessé avant Mondial) [web:58][web:60].",
+        "en": "3 red cards in opening match Mexico-South Africa (historical record for opening match) [web:65][web:68][web:71]. Total: only 3 red cards after 24 matches (less than 2022 with 4) [web:71]. Muscle injury rate: hamstrings up (Ter Stegen surgery planned, injured before World Cup) [web:58][web:60].",
+        "pt": "3 cartões vermelhos no jogo de abertura México-Afública do Sul (recorde histórico para jogo de abertura) [web:65][web:68][web:71]. Total: apenas 3 cartões vermelhos após 24 jogos (menos que 2022 com 4) [web:71]. Taxa de lesões musculares: isquiotibiais em aumento (Ter Stegen cirurgia planejada, lesionado antes do Mundial) [web:58][web:60]."
+      }
+    },
+    "point_3_fans_et_societe": {
+      "title": {
+        "fr": "Données économiques et sociales",
+        "en": "Economic and social data",
+        "pt": "Dados económicos e sociais"
+      },
+      "content": {
+        "fr": "USA : Prix billets Cat. 4 phase groupes : 60 $ (tarif FIFA officiel), mais tarification dynamique jusqu'à 430 $ [web:33][web:37][web:41][web:45]. Mexique : Taux occupation hôtelière Mexico 98% pour match d'ouverture [web:3][web:9]. Canada : 40% des revenus réinvestis dans sport amateur local. Première journée : 104 matchs prévus au total sur 3 pays [web:31].",
+        "en": "USA: Cat. 4 phase groups tickets: $60 (official FIFA price), but dynamic pricing up to $430 [web:33][web:37][web:41][web:45]. Mexico: Hotel occupancy Mexico City 98% for opening match [web:3][web:9]. Canada: 40% of revenue reinvested in local amateur sport. First day: 104 matches total planned across 3 countries [web:31].",
+        "pt": "EUA: Bilhetes Cat. 4 fase grupos: 60 $ (preço oficial FIFA), mas precificação dinâmica até 430 $ [web:33][web:37][web:41][web:45]. México: Ocupação hoteleira Cidade do México 98% para jogo de abertura [web:3][web:9]. Canadá: 40% das receitas reinvestidas em esporte amador local. Primeiro dia: 104 jogos totais planejados em 3 países [web:31]."
+      }
+    },
+    "point_4_culture_et_stars": {
+      "title": {
+        "fr": "Faits culturels et mondains",
+        "en": "Cultural and celebrity facts",
+        "pt": "Factos culturais e mundanos"
+      },
+      "content": {
+        "fr": "Cérémonie ouverture Azteca (11 juin) : Shakira + Burna Boy (show 20 min) [web:3][web:6][web:9]. SoFi Stadium : présence personnalités tech/Hollywood confirmée. 48 équipes participent (plus grand Mondial historique) [web:31]. Dates : 11 juin - 19 juillet 2026, USA/Canada/Mexique [web:31].",
+        "en": "Azteca opening ceremony (June 11): Shakira + Burna Boy (20 min show) [web:3][web:6][web:9]. SoFi Stadium: tech/Hollywood personalities presence confirmed. 48 teams participating (largest World Cup historically) [web:31]. Dates: June 11 - July 19, 2026, USA/Canada/Mexico [web:31].",
+        "pt": "Cerimônia abertura Azteca (11 junho): Shakira + Burna Boy (show 20 min) [web:3][web:6][web:9]. SoFi Stadium: presença personalidades tech/Hollywood confirmada. 48 equipes participam (maior Mundial histórico) [web:31]. datas: 11 junho - 19 julho 2026, EUA/Canadá/México [web:31]."
+      }
+    },
+    "point_5_humour_et_effets_surprises": {
+      "title": {
+        "fr": "Humour et effets surprises",
+        "en": "Humour and surprise effects",
+        "pt": "Humor e efeitos surpresa"
+      },
+      "content": {
+        "fr": "Curaçao écrit l'histoire : premier but en Mondial malgré défaite 7-1 (Comenencia) [web:14][web:17]. Curaçao = plus petit pays jamais en phase finale [web:14][web:17]. Premier match ouverture avec 3 cartons rouges = statistique difficile à reproduire [web:65][web:68]. 75 buts jour 1 = plus prolifique depuis 1958 (3,63/match) [web:21][web:71].",
+        "en": "Curaçao writes history: first World Cup goal despite 7-1 loss (Comenencia) [web:14][web:17]. Curaçao = smallest country ever in final phase [web:14][web:17]. First opening match with 3 red cards = statistic difficult to reproduce [web:65][web:68]. 75 goals day 1 = most prolific since 1958 (3.63/match) [web:21][web:71].",
+        "pt": "Curaçao escreve história: primeiro gol no Mundial apesar derrota 7-1 (Comenencia) [web:14][web:17]. Curaçao = menor país jamais na fase final [web:14][web:17]. Primeiro jogo abertura com 3 cartões vermelhos = estatística difícil reproduzir [web:65][web:68]. 75 golos dia 1 = mais prolífico desde 1958 (3,63/jogo) [web:21][web:71]."
+      }
+    }
+  }
+      }
