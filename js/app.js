@@ -5,17 +5,23 @@ import { ChanceEngine } from './chance.js';
 import { Mascotte } from './mascotte.js';
 import { texts } from './traductions.js';
 
-// 1. Navigation entre les sections (Appelé par ton HTML)
+// État global de l'application
+const state = {
+    data: null,
+    lang: 'fr'
+};
+
+// 1. Navigation entre les sections
 window.tab = (sectionId, btn) => {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    
     document.getElementById(sectionId).classList.add('active');
     btn.classList.add('active');
 };
 
-// 2. Gestion des langues (Appelé par ton HTML)
+// 2. Gestion des langues
 window.changerLangue = (lang) => {
+    state.lang = lang;
     const t = texts[lang];
     if (!t) return;
     
@@ -28,22 +34,24 @@ window.changerLangue = (lang) => {
     console.log("Langue basculée en :", lang);
 };
 
-// 3. Initialisation de l'application
+// 3. Initialisation unique et centralisée
 async function demarrerApplication() {
     console.log("🚀 Lancement de l'Oracle MUJOS Octopus 2...");
     
-    // Affiche la mascotte dès le chargement
+    // Affichage de la mascotte
     Mascotte.afficher('mascotte-container');
     
-    const data = await chargerDonneesMondial();
+    // Chargement unique des données
+    state.data = await chargerDonneesMondial();
     
-    if (data) {
+    if (state.data) {
         console.log("✅ Données reçues, système opérationnel.");
-        // Ici, tu pourras appeler tes fonctions de calcul (StatsEngine, etc.)
+        // Ici, tu pourras appeler tes fonctions de calcul et initialiser tes vues
+        // Exemple : afficherGroupes(state.data);
     } else {
         console.error("❌ Impossible de démarrer : pas de données.");
     }
 }
 
 window.addEventListener('load', demarrerApplication);
-                      
+        
