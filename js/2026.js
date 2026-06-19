@@ -1,24 +1,28 @@
-/**
- * MISSION : Fournir les données du tournoi.
- * Il ne calcule rien, il ne formate rien. 
- * Il va juste chercher le fichier JSON à la racine.
- */
+// js/2026.js
 
-export const chargerDonneesMondial = async () => {
+let donneesCoupeDuMonde = null;
+
+/**
+ * Charge le fichier 2026.json une seule fois et le stocke en mémoire.
+ */
+export async function chargerDonneesMondial() {
+    if (donneesCoupeDuMonde) return donneesCoupeDuMonde; // Si déjà chargé, on renvoie la cache
+
     try {
-        const response = await fetch('./2026.json');
-        
-        // On vérifie si le fichier est bien là
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP : ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data; 
-        
+        const response = await fetch('2026.json');
+        if (!response.ok) throw new Error('Erreur lors du chargement du calendrier');
+        donneesCoupeDuMonde = await response.json();
+        return donneesCoupeDuMonde;
     } catch (error) {
-        console.error("❌ Erreur dans 2026.js (Fournisseur) :", error);
-        return null; // Retourne null pour que app.js sache qu'il y a eu un problème
+        console.error("Problème avec le fichier miracle 2026.json :", error);
+        return null;
     }
-};
-                      
+}
+
+/**
+ * Exemple de fonction de lecture : Récupérer tous les matchs d'un groupe précis
+ */
+export function getMatchsParGroupe(nomGroupe) {
+    if (!donneesCoupeDuMonde) return [];
+    return donneesCoupeDuMonde.rounds[0].matches.filter(m => m.group === nomGroupe);
+}
