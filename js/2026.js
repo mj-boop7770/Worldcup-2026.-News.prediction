@@ -1,28 +1,46 @@
 // js/2026.js
 
-let donneesCoupeDuMonde = null;
-
 /**
- * Charge le fichier 2026.json une seule fois et le stocke en mémoire.
+ * Charge les données depuis le fichier JSON
  */
 export async function chargerDonneesMondial() {
-    if (donneesCoupeDuMonde) return donneesCoupeDuMonde; // Si déjà chargé, on renvoie la cache
-
     try {
         const response = await fetch('2026.json');
-        if (!response.ok) throw new Error('Erreur lors du chargement du calendrier');
-        donneesCoupeDuMonde = await response.json();
-        return donneesCoupeDuMonde;
+        if (!response.ok) throw new Error("Erreur lors du chargement du fichier 2026.json");
+        return await response.json();
     } catch (error) {
-        console.error("Problème avec le fichier miracle 2026.json :", error);
+        console.error("Erreur:", error);
         return null;
     }
 }
 
 /**
- * Exemple de fonction de lecture : Récupérer tous les matchs d'un groupe précis
+ * Filtre les matchs selon leur statut ("Terminé" ou "À venir")
+ * @param {Object} data - L'objet complet provenant du JSON
+ * @param {string} statut - "Terminé" ou "À venir"
  */
-export function getMatchsParGroupe(nomGroupe) {
-    if (!donneesCoupeDuMonde) return [];
-    return donneesCoupeDuMonde.rounds[0].matches.filter(m => m.group === nomGroupe);
+export function filtrerMatchsParStatut(data, statut) {
+    if (!data || !data.rounds) return [];
+    return data.rounds[0].matches.filter(m => m.status === statut);
 }
+
+/**
+ * Récupère tous les matchs d'un groupe spécifique
+ */
+export function filtrerMatchsParGroupe(data, groupName) {
+    if (!data || !data.rounds) return [];
+    return data.rounds[0].matches.filter(m => m.group === groupName);
+}
+
+/**
+ * Calcule les stats rapides (nombre de matchs terminés par exemple)
+ */
+export function obtenirResumeStatut(data) {
+    const matches = data.rounds[0].matches;
+    return {
+        total: matches.length,
+        termines: matches.filter(m => m.status === "Terminé").length,
+        aVenir: matches.filter(m => m.status === "À venir").length
+    };
+        }
+                                 
