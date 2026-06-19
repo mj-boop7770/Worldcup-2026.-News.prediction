@@ -1,46 +1,75 @@
-import { chargerDonneesMondial } from './2026.js';
+import { chargerToutesLesDonnees } from './2026.js';
 
-// Gestion de la navigation entre les onglets
-window.tab = function(sectionId, btn) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
-    btn.classList.add('active');
-};
+// Configuration de la langue par défaut
+let langueCourante = 'fr';
 
-// Gestion de la langue (fonction placeholder)
-window.changerLangue = function(lang) {
-    console.log("Langue changée en :", lang);
-    alert("Fonctionnalité " + lang + " en cours de développement.");
-};
-
-// Initialisation et chargement des données
 async function init() {
-    const data = await chargerDonneesMondial();
-    const scheduleDiv = document.getElementById('schedule');
-
-    if (data && data.rounds && scheduleDiv) {
-        const matchs = data.rounds[0].matches;
-        
-        scheduleDiv.innerHTML = `
-            <h2>Calendrier des matchs</h2>
-            <div id="match-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px;">
-                ${matchs.map(m => `
-                    <div class="match-card" style="border: 1px solid #444; padding: 15px; border-radius: 10px; background: #111;">
-                        <div style="font-size: 0.8rem; color: #888;">${m.group} | ${m.stadium}</div>
-                        <h3 style="margin: 10px 0;">${m.team1} vs ${m.team2}</h3>
-                        <p style="font-weight: bold; color: #D4AF37;">
-                            ${m.score1 !== null ? `${m.score1} - ${m.score2}` : 'À venir'}
-                        </p>
-                        <p style="font-size: 0.9rem;">${m.date} à ${m.time} | <strong>${m.status}</strong></p>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    } else if (scheduleDiv) {
-        scheduleDiv.innerHTML = "<p>Erreur lors du chargement des matchs.</p>";
+    const data = await chargerToutesLesDonnees();
+    if (!data) {
+        console.error("Échec du chargement des données.");
+        return;
     }
+
+    // Fonction de rendu global
+    const rendre = () => {
+        peuplerCalendrier(data.calendrier.rounds);
+        peuplerDossiers(data.dossiers.matches_dossier);
+        peuplerNews(data.news.news_section);
+    };
+
+    // Exposition au scope global pour le HTML
+    window.changerLangue = (lang) => {
+        langueCourante = lang;
+        rendre();
+    };
+
+    rendre();
 }
 
-// Lancer au chargement de la page
+function peuplerCalendrier(rounds) {
+    const container = document.getElementById('schedule');
+    if (!container) return;
+    
+    container.innerHTML = rounds.map(r => `
+        <div class="round">
+            <h3>${r.name}</h3>
+            ${r.matches.map(m => `
+                <div class="match-card">
+                    <p><strong>${m.team1} vs ${m.team2}</strong></p>
+                    <p>${m.date} - ${m.time} | Stade: ${m.stadium}</p>
+                    <p>Statut: ${m.status} | Score: ${m.score1 !== null ? m.score1 + '-' + m.score2 : '-'}</p>
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function peuplerDossiers(dossiers) {
+    const container = document.getElementById('dossiers');
+    if (!container) return;
+
+    container.innerHTML = dossiers.map(d => `
+        <div class="dossier-card">
+            <h3>${d.match} (${d.date})</h3>
+            <p><strong>Groupe:</strong> ${d.group}</p>
+            <p><strong>Coach (USA):</strong> ${d.teams.usa.coach.name}</p>
+            <p><strong>Analyse:</strong> ${d.teams.usa.prediction[langueCourante]}</p>
+        </div>
+    `).join('');
+}
+
+function peuplerNews(newsSection) {
+    const container = document.getElementById('news');
+    if (!container) return;
+
+    container.innerHTML = Object.values(newsSection).map(n => `
+        <div class="news-card">
+            <h3>${n.title[langueCourante]}</h3>
+            <p>${n.content[langueCourante]}</p>
+        </div>
+    `).join('');
+}
+
+// Lancer l'initialisation
 document.addEventListener('DOMContentLoaded', init);
+        
