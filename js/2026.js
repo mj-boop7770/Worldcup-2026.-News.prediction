@@ -2,14 +2,18 @@
 
 /**
  * Charge les données depuis le fichier JSON
+ * Utilise "./" pour pointer vers la racine du projet, 
+ * ce qui fonctionne sur GitHub Pages peu importe le dossier parent.
  */
 export async function chargerDonneesMondial() {
     try {
-        const response = await fetch('/2026.json');
-        if (!response.ok) throw new Error("Erreur lors du chargement du fichier 2026.json");
+        const response = await fetch('./2026.json');
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP: ${response.status} - Vérifiez que 2026.json est bien à la racine.`);
+        }
         return await response.json();
     } catch (error) {
-        console.error("Erreur:", error);
+        console.error("❌ Erreur lors du chargement de 2026.json :", error);
         return null;
     }
 }
@@ -33,14 +37,15 @@ export function filtrerMatchsParGroupe(data, groupName) {
 }
 
 /**
- * Calcule les stats rapides (nombre de matchs terminés par exemple)
+ * Calcule les stats rapides
  */
 export function obtenirResumeStatut(data) {
+    if (!data || !data.rounds) return { total: 0, termines: 0, aVenir: 0 };
     const matches = data.rounds[0].matches;
     return {
         total: matches.length,
         termines: matches.filter(m => m.status === "Terminé").length,
         aVenir: matches.filter(m => m.status === "À venir").length
     };
-        }
-                                 
+}
+    
