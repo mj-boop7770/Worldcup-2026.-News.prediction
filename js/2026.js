@@ -5,7 +5,7 @@
  */
 export async function chargerDonneesMondial() {
     try {
-        const response = await fetch('2026.json');
+        const response = await fetch('/2026.json');
         if (!response.ok) throw new Error("Erreur lors du chargement du fichier 2026.json");
         return await response.json();
     } catch (error) {
