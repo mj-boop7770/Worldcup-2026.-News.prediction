@@ -44,4 +44,3 @@ async function init() {
 
 // Lancer au chargement de la page
 document.addEventListener('DOMContentLoaded', init);
-    
