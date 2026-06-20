@@ -1,75 +1,55 @@
 import { chargerToutesLesDonnees } from './2026.js';
 
-// Configuration de la langue par défaut
-let langueCourante = 'fr';
+let langue = 'fr';
+let data = null;
 
-async function init() {
-    const data = await chargerToutesLesDonnees();
-    if (!data) {
-        console.error("Échec du chargement des données.");
-        return;
-    }
+// Initialisation au chargement
+document.addEventListener('DOMContentLoaded', async () => {
+    data = await chargerToutesLesDonnees();
+    if (data) rendre();
+});
 
-    // Fonction de rendu global
-    const rendre = () => {
-        peuplerCalendrier(data.calendrier.rounds);
-        peuplerDossiers(data.dossiers.matches_dossier);
-        peuplerNews(data.news.news_section);
-    };
+// Navigation Onglets
+window.tab = (id, btn) => {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+};
 
-    // Exposition au scope global pour le HTML
-    window.changerLangue = (lang) => {
-        langueCourante = lang;
-        rendre();
-    };
-
+// Gestion Langue
+window.changerLangue = (l) => {
+    langue = l;
     rendre();
-}
+};
 
-function peuplerCalendrier(rounds) {
-    const container = document.getElementById('schedule');
-    if (!container) return;
+function rendre() {
+    if (!data) return;
     
-    container.innerHTML = rounds.map(r => `
-        <div class="round">
-            <h3>${r.name}</h3>
-            ${r.matches.map(m => `
-                <div class="match-card">
-                    <p><strong>${m.team1} vs ${m.team2}</strong></p>
-                    <p>${m.date} - ${m.time} | Stade: ${m.stadium}</p>
-                    <p>Statut: ${m.status} | Score: ${m.score1 !== null ? m.score1 + '-' + m.score2 : '-'}</p>
-                </div>
-            `).join('')}
-        </div>
+    // Peuplement Calendrier
+    const sched = document.getElementById('schedule');
+    sched.innerHTML = data.calendrier.rounds.map(r => `
+        <h3>${r.name}</h3>
+        ${r.matches.map(m => `
+            <div style="border:1px solid #444; margin:5px; padding:10px;">
+                <strong>${m.team1} vs ${m.team2}</strong> - ${m.date}
+                <p>Score: ${m.score1 ?? 'À venir'}</p>
+            </div>`).join('')}
     `).join('');
-}
 
-function peuplerDossiers(dossiers) {
-    const container = document.getElementById('dossiers');
-    if (!container) return;
+    // Peuplement Dossiers
+    const doss = document.getElementById('dossier');
+    doss.innerHTML = data.dossiers.matches_dossier.map(d => `
+        <div style="border:1px solid #444; margin:5px; padding:10px;">
+            <h3>${d.match}</h3>
+            <p>${d.teams.usa.prediction[langue]}</p>
+        </div>`).join('');
 
-    container.innerHTML = dossiers.map(d => `
-        <div class="dossier-card">
-            <h3>${d.match} (${d.date})</h3>
-            <p><strong>Groupe:</strong> ${d.group}</p>
-            <p><strong>Coach (USA):</strong> ${d.teams.usa.coach.name}</p>
-            <p><strong>Analyse:</strong> ${d.teams.usa.prediction[langueCourante]}</p>
-        </div>
-    `).join('');
-}
-
-function peuplerNews(newsSection) {
-    const container = document.getElementById('news');
-    if (!container) return;
-
-    container.innerHTML = Object.values(newsSection).map(n => `
-        <div class="news-card">
-            <h3>${n.title[langueCourante]}</h3>
-            <p>${n.content[langueCourante]}</p>
-        </div>
-    `).join('');
-}
-
-// Lancer l'initialisation
-document.addEventListener('DOMContentLoaded', init);
-        
+    // Peuplement News
+    const news = document.getElementById('news');
+    news.innerHTML = Object.values(data.news.news_section).map(n => `
+        <div style="border:1px solid #444; margin:5px; padding:10px;">
+            <h3>${n.title[langue]}</h3>
+            <p>${n.content[langue]}</p>
+        </div>`).join('');
+        }
